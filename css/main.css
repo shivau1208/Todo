@@ -1,5 +1,8 @@
-/* @media(min-width: 1400px){
-    .container{
-        max-width: 970px;
+@media(min-width: 768px){
+    .news-input{
+        width: 60%;
     }
+}
+/* .text-info{
+    color:#2B6490;
 } */
