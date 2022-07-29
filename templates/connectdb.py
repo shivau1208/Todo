@@ -2,7 +2,7 @@ import mysql.connector
 
 
 mydb = mysql.connector.connect(host = 'localhost',
-                                database = 'HRM',
+                                database = 'ToDo',
                                 user = 'root',
                                 password = '1234')
 
