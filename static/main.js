@@ -46,8 +46,8 @@ function button(lin) {
     del.addEventListener('click',Delete)
 }
 
-function Delete(e){
-    e.preventDefault();
+function Delete(){
+    // e.preventDefault();
     let propt = prompt('Are you sure?');
     if(propt=='yes'){
         var div = this.parentElement;
