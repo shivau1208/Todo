@@ -10,10 +10,3 @@ app.config['MYSQL_DB'] = 'ToDo'
 app.config['MYSQL_PORT'] = 3306
 
 mydb = MySQL(app)
-
-
-
-
-
-
-
