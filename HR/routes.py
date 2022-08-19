@@ -1,4 +1,3 @@
-from json import JSONEncoder
 from HR import app
 from flask import render_template,request,jsonify
 from connectdb import mydb
@@ -14,9 +13,9 @@ def task():
     if request.method == 'POST':
         task = request.form.get("taskname")
         cursor = mydb.connection.cursor()
-        cursor.execute('INSERT INTO tasks (task_name) VALUES(%s)' , (task,))
+        cursor.execute('INSERT INTO Tasks (task_name) VALUES(%s)' , (task,))
         cursor.connection.commit()
-        cursor.execute('SELECT * FROM tasks')
+        cursor.execute('SELECT * FROM Tasks')
         data = cursor.fetchall()
         cursor.close()
         dt = jsonify(data)
