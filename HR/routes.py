@@ -1,8 +1,25 @@
+from json import JSONEncoder
 from HR import app
-from flask import render_template
+from flask import render_template,request,jsonify
+from connectdb import mydb
 
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def hello():
     return render_template('index.html')
 
+@app.route('/task', methods=['GET','POST'])
+def task():
+
+    if request.method == 'POST':
+        task = request.form.get("taskname")
+        cursor = mydb.connection.cursor()
+        cursor.execute('INSERT INTO tasks (task_name) VALUES(%s)' , (task,))
+        cursor.connection.commit()
+        cursor.execute('SELECT * FROM tasks')
+        data = cursor.fetchall()
+        cursor.close()
+        dt = jsonify(data)
+        # print(data)
+        return dt
+    return render_template('index.html')

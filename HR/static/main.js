@@ -8,7 +8,8 @@ function run(){
 function taskinput(){
     var lin = document.createElement('li');
     lin.className = 'list-group-item mt-3 d-flex';
-    var input = document.getElementById('inputId').value;
+    // var input = document.getElementById('inputId').value;
+    var input = db();
     var tsk = document.createTextNode(input);
     var text = document.createElement('text');
     text.className = 'text-dark mt-1 flex-grow-1'
@@ -19,7 +20,7 @@ function taskinput(){
     }else{
         document.getElementById('list').appendChild(lin);
     }
-    document.getElementById("inputId").value = "";
+    // document.getElementById("inputId").value = "";
     icon(lin);
     button(lin);
     image(lin); 
@@ -53,6 +54,17 @@ function Delete(){
         var div = this.parentElement;
         div.remove();
     }
+}
+
+function db(){
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET","task",true)
+    xhr.setRequestHeader("content","application/x-www-form-urlencoded")
+    xhr.onload = function(){
+        var dat = JSON.parse(this.responseText);
+        console.log(dat);
+    }
+    xhr.send();
 }
 
 
