@@ -2,14 +2,14 @@ var task = document.getElementById('btn').addEventListener('click',run);
 
 
 function run(){
-    taskinput();
+    fetchdata();
 }
 
-function taskinput(){
+function taskinput(data){
     var lin = document.createElement('li');
     lin.className = 'list-group-item mt-3 d-flex';
     // var input = document.getElementById('inputId').value;
-    var input = db();
+    var input = data;
     var tsk = document.createTextNode(input);
     var text = document.createElement('text');
     text.className = 'text-dark mt-1 flex-grow-1'
@@ -23,7 +23,7 @@ function taskinput(){
     // document.getElementById("inputId").value = "";
     icon(lin);
     button(lin);
-    image(lin); 
+    image(lin);
 }
 
 function icon(lin) {
@@ -42,7 +42,7 @@ function image(lin) {
 
 function button(lin) {
     var del = document.createElement('i');
-    del.className = 'fa fa-solid fa-2x fa-minus p-1 m-1';
+    del.className = 'fa fa-solid fa-2x fa-minus p-1 m-1 delete';
     lin.appendChild(del);
     del.addEventListener('click',Delete)
 }
@@ -56,15 +56,39 @@ function Delete(){
     }
 }
 
-function db(){
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET","task",true)
-    xhr.setRequestHeader("content","application/x-www-form-urlencoded")
-    xhr.onload = function(){
-        var dat = JSON.parse(this.responseText);
-        console.log(dat);
-    }
-    xhr.send();
+// function db(){
+//     const xhr = new XMLHttpRequest();
+//     // xhr.open("GET","task",true)
+//     // xhr.setRequestHeader("content","application/x-www-form-urlencoded")
+//     xhr.onload = function(){
+//        fetch('/task')
+//             .then(response => response.json())
+//             .then(text => console.log(text))
+//     }
+//     // xhr.send();
+// }
+fetchdata();       
+
+function fetchdata() {
+    fetch('/task')
+        .then(res => res.json())
+        .then(data => {
+            for (let i=0; i<data.length;i++){
+                var dt = data[i].task_name;
+                taskinput(dt)
+            }
+        }
+        )
+        .catch(error => console.error(error))
 }
-
-
+// fetch('/task',{
+//     method:'POST',
+//     headers:{
+//         'Accept':'application/json, text/plain,*/*',
+//         'Content-Type':'application/json'
+//     }
+//     })
+//     .then(res => res.json())
+//     .then(data => console.log(data))
+//     .catch(error => console.error(error))
+    

@@ -9,16 +9,20 @@ def hello():
 
 @app.route('/task', methods=['GET','POST'])
 def task():
+    cursor = mydb.connection.cursor()
 
     if request.method == 'POST':
         task = request.form.get("taskname")
-        cursor = mydb.connection.cursor()
         cursor.execute('INSERT INTO Tasks (task_name) VALUES(%s)' , (task,))
         cursor.connection.commit()
+    elif request.method == 'GET':
         cursor.execute('SELECT * FROM Tasks')
         data = cursor.fetchall()
         cursor.close()
-        dt = jsonify(data)
-        # print(data)
-        return dt
+        return jsonify(data)
     return render_template('index.html')
+
+# @app.route('/rmtask',methods=['GET','POST'])
+# def delete():
+#     cursor = mydb.connection.cursor()
+#     if request.method == 'POST':
