@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from HR import app
 from flask import render_template,request,jsonify
 from connectdb import mydb
@@ -10,11 +11,14 @@ def hello():
 @app.route('/task', methods=['GET','POST'])
 def task():
     cursor = mydb.connection.cursor()
-
     if request.method == 'POST':
         task = request.form.get("taskname")
-        cursor.execute('INSERT INTO Tasks (task_name) VALUES(%s)' , (task,))
-        cursor.connection.commit()
+        if(task != ''):
+            cursor.execute('INSERT INTO Tasks (task_name) VALUES(%s)' , (task,))
+            cursor.connection.commit()
+        else:
+            return render_template('index.html')
+            
     elif request.method == 'GET':
         cursor.execute('SELECT * FROM Tasks')
         data = cursor.fetchall()
@@ -26,3 +30,6 @@ def task():
 # def delete():
 #     cursor = mydb.connection.cursor()
 #     if request.method == 'POST':
+#         cursor.execute('DELETE FROM Tasks WHERE task_name')
+#         cursor.connection.commit()
+        

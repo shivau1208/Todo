@@ -9,3 +9,13 @@
 /* #list1{
     width: 500px;
 } */
+.li{
+    border-radius: 2pc !important;
+    box-shadow: 0 0 4px #f4c50d;
+    font-size: 20px;
+}
+.text{
+    padding-top: 5px;
+    text-align: center;
+    text-transform: capitalize;
+}

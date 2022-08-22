@@ -2,29 +2,36 @@ var task = document.getElementById('btn').addEventListener('click',run);
 
 
 function run(){
-    fetchdata();
+    var input = document.getElementById('inputId').value;
+    if(input === ''){
+        alert('You must write somthing!');
+    }
+    else{
+        db()
+    }
 }
 
 function taskinput(data){
     var lin = document.createElement('li');
-    lin.className = 'list-group-item mt-3 d-flex';
-    // var input = document.getElementById('inputId').value;
-    var input = data;
-    var tsk = document.createTextNode(input);
+    lin.className = 'list-group-item mt-3 d-flex li';
+    // var input = data;
+    var tsk = document.createTextNode(data);
     var text = document.createElement('text');
-    text.className = 'text-dark mt-1 flex-grow-1'
+    text.className = 'text-dark mt-1 flex-grow-1 text'
     text.appendChild(tsk);
     lin.appendChild(text);
-    if(input === ''){
-        alert('You must write somthing!');
-    }else{
-        document.getElementById('list').appendChild(lin);
-    }
-    // document.getElementById("inputId").value = "";
+    document.getElementById('list').appendChild(lin);
+    // if(input === ''){
+    //     alert('You must write somthing!');
+    // }else{
+    //     document.getElementById('list').appendChild(lin);
+    // }
     icon(lin);
     button(lin);
     image(lin);
+    // document.getElementById("inputId").value = "";
 }
+
 
 function icon(lin) {
     var icon = document.createElement('i');
@@ -56,17 +63,20 @@ function Delete(){
     }
 }
 
-// function db(){
-//     const xhr = new XMLHttpRequest();
-//     // xhr.open("GET","task",true)
-//     // xhr.setRequestHeader("content","application/x-www-form-urlencoded")
-//     xhr.onload = function(){
-//        fetch('/task')
-//             .then(response => response.json())
-//             .then(text => console.log(text))
-//     }
-//     // xhr.send();
-// }
+function db(){
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET","/task")
+    xhr.onload = function(){
+        var dat = JSON.parse(this.response);
+        for (let i=0; i<dat.length;i++){
+            var dt = dat[i].task_name;
+            taskinput(dt)
+        }
+    }
+    xhr.send();
+}
+
+// db();
 fetchdata();       
 
 function fetchdata() {
