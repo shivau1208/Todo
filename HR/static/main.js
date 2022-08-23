@@ -1,5 +1,24 @@
 var task = document.getElementById('btn').addEventListener('click',run);
+var dlt = document.getElementById('del').addEventListener('click',det);
+var rgt = document.getElementById('right').addEventListener('click', right)
 
+function right(){
+    var li = document.querySelectorAll('.li');
+    for (j=0; j<li.length;j++){
+        // console.log(li[j].firstChild.style)
+        li[j].firstChild.style = 'text-decoration: line-through;text-decoration-style: solid;text-decoration-thickness: 2px;';
+    }
+}
+
+function det(){
+    let propt = prompt('Are you sure?');
+    if(propt=='yes'){
+        let lis = document.querySelectorAll('.li');
+        for (i=0; i<lis.length;i++){
+            lis[i].remove();
+        }
+    }
+}
 
 function run(){
     var input = document.getElementById('inputId').value;
@@ -12,26 +31,31 @@ function run(){
 }
 
 function taskinput(data){
+
     var lin = document.createElement('li');
     lin.className = 'list-group-item mt-3 d-flex li';
     // var input = data;
+    // inp(lin);
     var tsk = document.createTextNode(data);
     var text = document.createElement('text');
     text.className = 'text-dark mt-1 flex-grow-1 text'
     text.appendChild(tsk);
     lin.appendChild(text);
     document.getElementById('list').appendChild(lin);
-    // if(input === ''){
-    //     alert('You must write somthing!');
-    // }else{
-    //     document.getElementById('list').appendChild(lin);
-    // }
     icon(lin);
     button(lin);
     image(lin);
     // document.getElementById("inputId").value = "";
 }
 
+function inp(lin){
+    var ip = document.createElement('input');
+    ip.type = 'checkbox';
+    ip.id = 'box';
+    ip.className = 'form-check-input'
+    var val = ip.value;
+    lin.appendChild(ip);
+}
 
 function icon(lin) {
     var icon = document.createElement('i');
@@ -49,7 +73,7 @@ function image(lin) {
 
 function button(lin) {
     var del = document.createElement('i');
-    del.className = 'fa fa-solid fa-2x fa-minus p-1 m-1 delete';
+    del.className = 'fa fa-solid fa-2x fa-minus p-1 m-1';
     lin.appendChild(del);
     del.addEventListener('click',Delete)
 }

@@ -14,8 +14,26 @@
     box-shadow: 0 0 4px #f4c50d;
     font-size: 20px;
 }
+.lit{
+    border-radius: 2pc !important;
+    box-shadow: 0 0 4px #f4c50d;
+    font-size: 20px;
+}
 .text{
     padding-top: 5px;
     text-align: center;
     text-transform: capitalize;
+}
+
+#box{
+    margin-left: 20px;
+    margin-top: 18px !important;
+}
+#text1{
+    color: #26d96c !important;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    margin-top: 0px !important;
 }
