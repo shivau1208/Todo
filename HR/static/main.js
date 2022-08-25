@@ -84,12 +84,14 @@ function Delete(){
     if(propt=='yes'){
         var div = this.parentElement;
         div.remove();
+        const d= JSON.stringify(div.firstChild.textContent);
+        del(d);
     }
 }
 
 function db(){
     const xhr = new XMLHttpRequest();
-    xhr.open("GET","/task")
+    xhr.open("GET","/list")
     xhr.onload = function(){
         var dat = JSON.parse(this.response);
         for (let i=0; i<dat.length;i++){
@@ -104,25 +106,40 @@ function db(){
 fetchdata();       
 
 function fetchdata() {
-    fetch('/task')
+    fetch('/list')
         .then(res => res.json())
         .then(data => {
             for (let i=0; i<data.length;i++){
-                var dt = data[i].task_name;
-                taskinput(dt)
+                const dt = data.sort((a,b) => {
+                    if (b.time>a.time){
+                        return 1;
+                    }else{
+                        return -1;
+                    }
+                });
+                taskinput(dt[i].task_name);
             }
         }
         )
         .catch(error => console.error(error))
 }
-// fetch('/task',{
-//     method:'POST',
-//     headers:{
-//         'Accept':'application/json, text/plain,*/*',
-//         'Content-Type':'application/json'
-//     }
+
+// function del(d) {
+//     fetch('/del', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             body: JSON.stringify(d)
+//         }
 //     })
-//     .then(res => res.json())
-//     .then(data => console.log(data))
-//     .catch(error => console.error(error))
+//         .then(res => res.json())
+//         .then(data => console.log(data))
+//         .catch(error => console.error(error));
+// }
+function del(d){
+    var xml = new XMLHttpRequest()
+    xml.open('POST','/del',true);
+    xml.setRequestHeader('Content-Type','application/json')
+    xml.send(d)
+}
     

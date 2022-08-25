@@ -1,4 +1,4 @@
-from asyncio.windows_events import NULL
+import json
 from HR import app
 from flask import render_template,request,jsonify
 from connectdb import mydb
@@ -8,28 +8,34 @@ from connectdb import mydb
 def hello():
     return render_template('index.html')
 
-@app.route('/task', methods=['GET','POST'])
+@app.route('/task', methods=['POST'])
 def task():
     cursor = mydb.connection.cursor()
     if request.method == 'POST':
         task = request.form.get("taskname")
         if(task != ''):
-            cursor.execute('INSERT INTO Tasks (task_name) VALUES(%s)' , (task,))
+            cursor.execute('INSERT INTO tasks (task_name) VALUES(%s)' , (task,))
             cursor.connection.commit()
         else:
             return render_template('index.html')
-            
-    elif request.method == 'GET':
-        cursor.execute('SELECT * FROM Tasks')
+    
+@app.route('/list', methods=['GET'])
+def list():
+    cursor = mydb.connection.cursor()
+    if request.method == 'GET':
+        cursor.execute('SELECT * FROM tasks')
         data = cursor.fetchall()
         cursor.close()
         return jsonify(data)
-    return render_template('index.html')
 
-# @app.route('/rmtask',methods=['GET','POST'])
-# def delete():
-#     cursor = mydb.connection.cursor()
-#     if request.method == 'POST':
-#         cursor.execute('DELETE FROM Tasks WHERE task_name')
-#         cursor.connection.commit()
+@app.route('/del',methods=['POST'])
+def delete():
+    cursor = mydb.connection.cursor()
+    if request.method == 'POST':
+        nm = request.get_json()
+        print(nm)
+        # name = json.loads(nm.text)
+        # print(name)
+        cursor.execute('DELETE FROM tasks WHERE task_name = %s',(nm,))
+        cursor.connection.commit()
         
