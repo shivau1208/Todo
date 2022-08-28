@@ -10,21 +10,34 @@ function run(){
     }
 }
 
-function taskinput(data){
+function taskinput(data,complete){
     var lin = document.createElement('li');
-    lin.className = 'list-group-item mt-3 d-flex li';
+    lin.className = 'list-group-item mt-3 d-flex align-items-center li news-input';
     var tsk = document.createTextNode(data);
-    var text = document.createElement('text');
-    text.className = 'text-dark mt-1 flex-grow-1 text'
+    var text = document.createElement('p');
+    text.className = 'text-dark mt-1 flex-grow-1 text';
     text.appendChild(tsk);
+    text.addEventListener('click',function(){
+        this.style = 'text-decoration: line-through;text-decoration-style: solid;text-decoration-thickness: 2px;';
+        this.addEventListener('click',markasUnread)
+        markasRead(text);
+    })
+    text.id = 'read'
+    if (complete == 'Complete'){
+        text.style = 'text-decoration: line-through;text-decoration-style: solid;text-decoration-thickness: 2px;';
+    }
     lin.appendChild(text);
     document.getElementById('list').appendChild(lin);
+    edit(lin);
     icon(lin);
     button(lin);
     image(lin);
-    // document.getElementById("inputId").value = "";
 }
-
+ function markasUnread(){
+    var lt = this.parentElement;
+    lt.firstChild.style = 'text-decoration:none;';
+    lt.addEventListener('click',markasRead)
+ }
 function icon(lin) {
     var icon = document.createElement('i');
     icon.className = 'fa fa-solid fa-2x fa-bounce fa-angles-down p-1 m-1';
@@ -45,8 +58,15 @@ function image(lin) {
     clk.style = '--fa-animation-duration: 2s;';
     lin.appendChild(clk);
 }
+function edit(lin) {
+    var edit = document.createElement('i');
+    edit.className = 'fa fa-solid fa-2x fa-pen-to-square p-1 m-1 edit';
+    lin.appendChild(edit);
+    edit.addEventListener('click',editable)
 
-document.getElementById('right').addEventListener('click', markRead)
+}
+
+document.getElementById('right').addEventListener('click', markRead);
 function markRead(){
     var li = document.querySelectorAll('.li');
     for (j=0; j<li.length;j++){
@@ -57,11 +77,25 @@ function markRead(){
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
-                task_name:li[j].firstChild.textContent,
+                task_name:li[j].firstChild.textContent
             })
         })
     }
 }
+
+function markasRead(){
+    // fetch('/complete',{
+    //     method: 'POST',
+    //     headers:{
+    //         'Content-Type':'application/json'
+    //     },
+    //     body:JSON.stringify({
+    //         task_name:text.textContent
+    //     })
+    // })
+}
+
+
 
 fetchdata();       
 
@@ -77,7 +111,7 @@ function fetchdata() {
                         return -1;
                     }
                 });
-                taskinput(dt[i].task_name);
+                taskinput(dt[i].task_name,dt[i].task_complete)
             }
         }
         )
@@ -91,7 +125,8 @@ function db(){
         var dat = JSON.parse(this.response);
         for (let i=0; i<dat.length;i++){
             var dt = dat[i].task_name;
-            taskinput(dt)
+            var complete = dat[i].task_complete;
+            taskinput(dt,complete)
         }
     }
     xhr.send();
@@ -105,6 +140,14 @@ function delSingle(){
         const d= JSON.stringify(div.firstChild.textContent);
         delS(d);
     }
+}
+
+function editable(){
+    var et = this.parentElement;
+    et.firstChild.style ='text-decoration: none';
+    et.firstChild.contentEditable = true;
+    et.firstChild.focus();
+
 }
 
 document.getElementById('del').addEventListener('click',delAll);

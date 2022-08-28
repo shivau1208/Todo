@@ -25,7 +25,6 @@ def comp():
     if request.method == 'POST':
         complete = request.get_json()
         for key,val in complete.items():
-            print(val)
             cursor.execute('UPDATE tasks SET task_complete="Complete" WHERE task_name=%s' , (val,))
             cursor.connection.commit()
     return render_template('index.html')

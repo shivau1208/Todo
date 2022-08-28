@@ -39,8 +39,8 @@
     <!--Add task-->
     <section class="bg-white text-light p-3 p-lg-1">
         <div class="container-fluid">
-            <form action="/task" method="post" class="d-md-flex justify-content-between p-3">
-                <h3 class="text-dark mb-md-0">Make a list of <span class="text-info">Tasks</span></h3>
+            <form action="/task" method="post" class="d-md-flex justify-content-around p-3">
+                <h3 class="text-dark mb-md-0 mr-2">Make a list of <span class="text-info">Tasks</span></h3>
                 <div class="input-group news-input">
                     <input type="text"  class="form-control" name="taskname" id="inputId" placeholder="Enter Task">
                     <input class="btn btn-outline-primary" id="btn" type="submit" value="Submit"/>
@@ -52,8 +52,8 @@
     <section class="bg-white text-dark p-3 p-lg-0">
         <div class="container-fluid bg-white">
             <form class="bg-white form-inline" id="list1">
-                <ul class="list-group-text" id="list">
-                    <li class="list-group-item mt-3 d-flex lit">
+                <ul class="list-group" id="list">
+                    <li class="list-group-item mt-3 d-flex lit news-input">
                         <!-- <input type="checkbox" class="form-check-input" id="box"> -->
                         <text class="text-dark mt-1 flex-grow-1" id="text1">Task List</text>
                         <i class="fa-solid fa-2x fa-check p-1 m-1" id="right"></i>

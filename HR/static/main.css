@@ -1,6 +1,6 @@
 @media(min-width: 768px){
     .news-input{
-        width: 50%;
+        width: 40%;
     }
 }
 /* #list{
@@ -20,7 +20,7 @@
     font-size: 20px;
 }
 .text{
-    padding-top: 5px;
+    padding-top: 3px;
     text-align: center;
     text-transform: capitalize;
 }
