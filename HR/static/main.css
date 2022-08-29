@@ -1,6 +1,6 @@
 @media(min-width: 768px){
     .news-input{
-        width: 40%;
+        width: 50%;
     }
 }
 /* #list{
@@ -9,15 +9,21 @@
 /* #list1{
     width: 500px;
 } */
+#list{
+    align-items: center;
+}
+
 .li{
     border-radius: 2pc !important;
     box-shadow: 0 0 4px #f4c50d;
     font-size: 20px;
+    width: 150vh;
 }
 .lit{
     border-radius: 2pc !important;
     box-shadow: 0 0 4px #f4c50d;
     font-size: 20px;
+    width: 150vh;
 }
 .text{
     padding-top: 3px;
@@ -25,10 +31,10 @@
     text-transform: capitalize;
 }
 
-#box{
+/* #box{
     margin-left: 20px;
     margin-top: 18px !important;
-}
+} */
 #text1{
     color: #26d96c !important;
     font-size: 20px;

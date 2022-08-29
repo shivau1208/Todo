@@ -49,3 +49,16 @@ def delete():
         cursor.close()
     return render_template('index.html') 
         
+@app.route('/update',methods=['POST'])
+def update():
+    cursor = mydb.connection.cursor()
+    if request.method == 'POST':
+        updt = request.get_json()
+        old = updt.get('old')
+        new = updt.get('newval')
+    
+        cursor.execute('UPDATE tasks SET task_name=%s WHERE task_name=%s',(new,old,))
+        cursor.connection.commit()
+        cursor.close()
+
+    return render_template('index.html')
