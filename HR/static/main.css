@@ -3,38 +3,65 @@
         width: 50%;
     }
 }
-/* #list{
-    width: 500px;
-} */
-/* #list1{
-    width: 500px;
-} */
-#list{
+@media(min-width: 768px){
+    .list-width{
+        width: 100%;
+    }
+}
+
+.list-group{
     align-items: center;
 }
 
+
+/*li node CSS*/
 .li{
-    border-radius: 2pc !important;
     box-shadow: 0 0 4px #f4c50d;
     font-size: 20px;
-    width: 150vh;
+    align-items: center;
+    padding-left: 30px;
+
+    /* make the list items unselectable */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
+
+/* Task header li node CSS*/
 .lit{
-    border-radius: 2pc !important;
     box-shadow: 0 0 4px #f4c50d;
     font-size: 20px;
-    width: 150vh;
 }
+
+/*Text node CSS*/
 .text{
     padding-top: 3px;
     text-align: center;
     text-transform: capitalize;
 }
+.tip{
+    position: relative;
+}
 
-/* #box{
-    margin-left: 20px;
-    margin-top: 18px !important;
-} */
+.tip:hover:after{
+    position: absolute;
+    display: inline-block;
+    left: 0px;
+    top: 0px;
+    color: white;
+    background-color: black;
+    font-size: 5px;
+}
+
+.checked{
+    text-decoration: line-through;
+    text-decoration-style: solid;
+    /* text-decoration-color: red; */
+    text-decoration-thickness: 2px;
+}
+
+/*Task header CSS*/
 #text1{
     color: #26d96c !important;
     font-size: 20px;

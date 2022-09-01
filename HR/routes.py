@@ -16,17 +16,16 @@ def task():
         if(task != ''):
             cursor.execute('INSERT INTO tasks (task_name) VALUES(%s)' , (task,))
             cursor.connection.commit()
-        # else:
-        #     return render_template('index.html')
     return render_template('index.html')
 @app.route('/complete', methods=['POST'])
 def comp():
     cursor = mydb.connection.cursor()
     if request.method == 'POST':
         complete = request.get_json()
-        for key,val in complete.items():
-            cursor.execute('UPDATE tasks SET task_complete="Complete" WHERE task_name=%s' , (val,))
-            cursor.connection.commit()
+        complet = complete.get('task_complete')
+        task_name = complete.get('name')
+        cursor.execute('UPDATE tasks SET task_complete=%s WHERE task_name=%s' , (complet,task_name))
+        cursor.connection.commit()
     return render_template('index.html')
     
 @app.route('/list', methods=['GET'])
@@ -56,9 +55,8 @@ def update():
         updt = request.get_json()
         old = updt.get('old')
         new = updt.get('newval')
-    
-        cursor.execute('UPDATE tasks SET task_name=%s WHERE task_name=%s',(new,old,))
+        print(old,new)
+        cursor.execute('UPDATE tasks SET task_name=%s WHERE task_name=%s',(new,old))
         cursor.connection.commit()
         cursor.close()
-
     return render_template('index.html')

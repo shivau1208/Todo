@@ -1,6 +1,10 @@
-document.getElementById('btn').addEventListener('click',run);
+document.getElementById('btn').addEventListener('click',submit);
+document.getElementById('right').addEventListener('click', markRead);
+document.getElementById('del').addEventListener('click',delAll);
 
-function run(){
+fetchdata(); 
+
+function submit(){
     var input = document.getElementById('inputId').value;
     if(input === ''){
         alert('You must write somthing!');
@@ -9,37 +13,63 @@ function run(){
         db()
     }
 }
-
-function taskinput(data,complete){
+function tasklist(data,complete){
     var lin = document.createElement('li');
-    lin.className = 'list-group-item mt-3 d-flex align-items-center li';
+    lin.className = 'list-group-item mt-3 d-flex align-items-center li list-width';
     var tsk = document.createTextNode(data);
-    var text = document.createElement('text');
+    var text = document.createElement('h2');
     text.className = 'text-dark mt-1 flex-grow-1 text';
-    text.appendChild(tsk);
     text.id = 'read'
-    if (complete == 'Complete'){
+    text.addEventListener('click',function(e){
+        console.log(e.target.style.cssText);
+        var name = data;
+        linethrough(e,name)
+        
+    })
+    text.appendChild(tsk);
+    if (complete == true){
         text.style = 'text-decoration: line-through;text-decoration-style: solid;text-decoration-thickness: 2px;';
     }
     lin.appendChild(text);
     document.getElementById('list').appendChild(lin);
     edit(lin);
-    icon(lin);
-    button(lin);
-    image(lin);
+    Delete(lin);
+    // clock(lin);
+    discr(lin);
 }
-
+function linethrough(ev,name) {
+    if(ev.target.style.cssText == 'text-decoration: line-through 2px;'){
+        console.log(1);
+        ev.target.style = 'text-decoration:none;'
+        task_complete = false
+    }else{
+        console.log(0)
+        ev.target.style = 'text-decoration: line-through;text-decoration-style: solid;text-decoration-thickness: 2px;'
+        ev.target.classList.toggle('checked')
+        task_complete = true
+    }
+    fetch('/complete',{
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify(
+            {task_complete,
+            name,}
+        )
+    })
+}
 function edit(lin) {
     var edit = document.createElement('i');
     edit.className = 'fa fa-solid fa-2x fa-pen-to-square p-1 m-1 edit';
     lin.appendChild(edit);
     edit.addEventListener('click',editable)
-
 }
 function editable(){
     var et = this.parentElement;
     et.firstChild.style ='text-decoration: none';
     et.firstChild.contentEditable = true;
+    et.firstChild.focus()
     var oldval = et.firstChild.textContent;
     et.firstChild.style = 'outline:none;border: 1px solid blue;'
     et.addEventListener('keypress',function(e){
@@ -64,14 +94,13 @@ function keyEnter(e,oldval,et){
         })
     }
 }
-
-function icon(lin) {
+function discr(lin) {
     var icon = document.createElement('i');
     icon.className = 'fa fa-solid fa-2x fa-bounce fa-angles-down p-1 m-1';
     icon.style = '--fa-animation-duration: 2s; --fa-animation-iteration-count: 3;';
     lin.appendChild(icon);
 }
-function button(lin) {
+function Delete(lin) {
     var Delete = document.createElement('i');
     Delete.className = 'fa fa-solid fa-2x fa-minus p-1 m-1';
     lin.appendChild(Delete);
@@ -92,15 +121,12 @@ function delS(d){
     xml.setRequestHeader('Content-Type','application/json')
     xml.send(d)
 }
-
-function image(lin) {
+function clock(lin) {
     var clk = document.createElement('i');
     clk.className = 'fa fa-solid fa-2x fa-shake fa-clock p-1 m-1';
     clk.style = '--fa-animation-duration: 2s;';
     lin.appendChild(clk);
 }
-
-document.getElementById('right').addEventListener('click', markRead);
 function markRead(){
     var li = document.querySelectorAll('.li');
     for (j=0; j<li.length;j++){
@@ -116,8 +142,6 @@ function markRead(){
         })
     }
 }
-
-fetchdata();       
 function fetchdata() {
     fetch('/list')
         .then(res => res.json())
@@ -130,13 +154,12 @@ function fetchdata() {
                         return -1;
                     }
                 });
-                taskinput(dt[i].task_name,dt[i].task_complete)
+                tasklist(dt[i].task_name,dt[i].task_complete)
             }
         }
         )
         .catch(error => console.error(error))
 }
-
 function db(){
     const xhr = new XMLHttpRequest();
     xhr.open("GET","/list")
@@ -145,14 +168,11 @@ function db(){
         for (let i=0; i<dat.length;i++){
             var dt = dat[i].task_name;
             var complete = dat[i].task_complete;
-            taskinput(dt,complete)
+            tasklist(dt,complete)
         }
     }
     xhr.send();
 }
-
-document.getElementById('del').addEventListener('click',delAll);
-
 function delAll(){
     let propt = prompt('Are you sure?');
     if(propt=='yes'){
