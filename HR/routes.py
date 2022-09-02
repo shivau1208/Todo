@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 from HR import app
 from flask import render_template,request,jsonify
@@ -13,8 +14,11 @@ def task():
     cursor = mydb.connection.cursor()
     if request.method == 'POST':
         task = request.form.get("taskname")
+        discr = request.form.get('discr')
+        datetime = request.form.get('date')
+        print(task,discr,datetime)
         if(task != ''):
-            cursor.execute('INSERT INTO tasks (task_name) VALUES(%s)' , (task,))
+            cursor.execute('INSERT INTO tasks (task_name,discr,due_time) VALUES(%s,%s,%s)' , (task,discr,datetime,))
             cursor.connection.commit()
     return render_template('index.html')
 @app.route('/complete', methods=['POST'])

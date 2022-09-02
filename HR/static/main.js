@@ -6,6 +6,7 @@ fetchdata();
 
 function submit(){
     var input = document.getElementById('inputId').value;
+    console.log(input)
     if(input === ''){
         alert('You must write somthing!');
     }
@@ -14,14 +15,13 @@ function submit(){
     }
 }
 function tasklist(data,complete){
-    var lin = document.createElement('li');
+    var lin = document.createElement('div');
     lin.className = 'list-group-item mt-3 d-flex align-items-center li list-width';
     var tsk = document.createTextNode(data);
-    var text = document.createElement('h2');
+    var text = document.createElement('h4');
     text.className = 'text-dark mt-1 flex-grow-1 text';
     text.id = 'read'
     text.addEventListener('click',function(e){
-        console.log(e.target.style.cssText);
         var name = data;
         linethrough(e,name)
         
@@ -31,22 +31,24 @@ function tasklist(data,complete){
         text.style = 'text-decoration: line-through;text-decoration-style: solid;text-decoration-thickness: 2px;';
     }
     lin.appendChild(text);
-    document.getElementById('list').appendChild(lin);
-    edit(lin);
+    if(complete == true){
+        document.getElementById('list').append(lin);
+    }else{
+
+        document.getElementById('list').prepend(lin);
+    }
+    edit(lin,data);
     Delete(lin);
-    // clock(lin);
-    discr(lin);
 }
 function linethrough(ev,name) {
     if(ev.target.style.cssText == 'text-decoration: line-through 2px;'){
-        console.log(1);
         ev.target.style = 'text-decoration:none;'
         task_complete = false
+        document.getElementById('list').prepend(ev.target.parentElement)
     }else{
-        console.log(0)
         ev.target.style = 'text-decoration: line-through;text-decoration-style: solid;text-decoration-thickness: 2px;'
-        ev.target.classList.toggle('checked')
         task_complete = true
+        document.getElementById('list').append(ev.target.parentElement)
     }
     fetch('/complete',{
         method:'POST',
@@ -59,22 +61,24 @@ function linethrough(ev,name) {
         )
     })
 }
-function edit(lin) {
+function edit(lin,name) {
     var edit = document.createElement('i');
-    edit.className = 'fa fa-solid fa-2x fa-pen-to-square p-1 m-1 edit';
+    edit.className = 'fa fa-solid fa-pen-to-square p-1 m-1 edit';
     lin.appendChild(edit);
-    edit.addEventListener('click',editable)
+    edit.addEventListener('click',editable(name))
 }
-function editable(){
-    var et = this.parentElement;
-    et.firstChild.style ='text-decoration: none';
-    et.firstChild.contentEditable = true;
-    et.firstChild.focus()
-    var oldval = et.firstChild.textContent;
-    et.firstChild.style = 'outline:none;border: 1px solid blue;'
-    et.addEventListener('keypress',function(e){
-        keyEnter(e,oldval,et)
-    })
+function editable(name){
+    // document.getElementById('modal').click();
+    document.getElementById('inputId').textContent = name;
+    // var et = this.parentElement;
+    // et.firstChild.style ='text-decoration: none';
+    // et.firstChild.contentEditable = true;
+    // et.firstChild.focus()
+    // var oldval = et.firstChild.textContent;
+    // et.firstChild.style = 'outline:none;border: 1px solid blue;'
+    // et.addEventListener('keypress',function(e){
+    //     keyEnter(e,oldval,et)
+    // })
 
 }
 function keyEnter(e,oldval,et){
@@ -102,18 +106,15 @@ function discr(lin) {
 }
 function Delete(lin) {
     var Delete = document.createElement('i');
-    Delete.className = 'fa fa-solid fa-2x fa-minus p-1 m-1';
+    Delete.className = 'fa fa-solid fa-minus p-1 m-1';
     lin.appendChild(Delete);
     Delete.addEventListener('click',delSingle)
 }
 function delSingle(){
-    let propt = prompt('Are you sure?');
-    if(propt=='yes'){
-        var div = this.parentElement;
-        div.remove();
-        const d= JSON.stringify(div.firstChild.textContent);
-        delS(d);
-    }
+    var div = this.parentElement;
+    div.remove();
+    const d= JSON.stringify(div.firstChild.textContent);
+    delS(d);
 }
 function delS(d){
     var xml = new XMLHttpRequest()
@@ -146,16 +147,20 @@ function fetchdata() {
     fetch('/list')
         .then(res => res.json())
         .then(data => {
-            for (let i=0; i<data.length;i++){
-                const dt = data.sort((a,b) => {
-                    if (b.time>a.time){
-                        return 1;
-                    }else{
-                        return -1;
-                    }
-                });
-                tasklist(dt[i].task_name,dt[i].task_complete)
-            }
+            // for (let i=0; i<data.length;i++){
+            //     const dt = data.sort((a,b) => {
+            //         if (b.time>a.time){
+            //             return 1;
+            //         }else{
+            //             return -1;
+            //         }
+            //     });
+            //     tasklist(dt[i].task_name,dt[i].task_complete)
+            // }
+            data.map(dt =>
+                
+                tasklist(dt.task_name,dt.task_complete)
+                )
         }
         )
         .catch(error => console.error(error))
@@ -194,5 +199,3 @@ function delA(d) {
     })
     .catch(error => console.error(error));
 }
-
-    
