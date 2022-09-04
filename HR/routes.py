@@ -1,25 +1,31 @@
-from datetime import datetime
-import json
 from HR import app
-from flask import render_template,request,jsonify
+from flask import render_template,request,jsonify,redirect
 from connectdb import mydb
+import json
 
 
 @app.route('/', methods=['GET','POST'])
 def hello():
+    # cursor = mydb.connection.cursor()
+    # cursor.execute('SET GLOBAL TIME_zone="+5:30"')
+    # cursor.connection.commit()
+    # cursor.close()
     return render_template('index.html')
 
 @app.route('/task', methods=['POST'])
 def task():
     cursor = mydb.connection.cursor()
     if request.method == 'POST':
-        task = request.form.get("taskname")
-        discr = request.form.get('discr')
-        datetime = request.form.get('date')
+        frm  = request.get_json()
+        print(frm)
+        task = frm.get("oname")
+        discr = frm.get('odiscr')
+        datetime = frm.get('odate')
         print(task,discr,datetime)
         if(task != ''):
             cursor.execute('INSERT INTO tasks (task_name,discr,due_time) VALUES(%s,%s,%s)' , (task,discr,datetime,))
             cursor.connection.commit()
+            cursor.close()
     return render_template('index.html')
 @app.route('/complete', methods=['POST'])
 def comp():
@@ -57,10 +63,14 @@ def update():
     cursor = mydb.connection.cursor()
     if request.method == 'POST':
         updt = request.get_json()
-        old = updt.get('old')
-        new = updt.get('newval')
-        print(old,new)
-        cursor.execute('UPDATE tasks SET task_name=%s WHERE task_name=%s',(new,old))
-        cursor.connection.commit()
-        cursor.close()
+        oname = updt.get('oname')
+        odate = updt.get('odate')
+        odiscr = updt.get('odiscr')
+        name = updt.get('name')
+        time = updt.get('time')
+        discr = updt.get('discr')
+        print(oname,odate,odiscr,name,time,discr)
+        # cursor.execute('UPDATE tasks SET task_name=%s WHERE task_name=%s',(new,old))
+        # cursor.connection.commit()
+        # cursor.close()
     return render_template('index.html')

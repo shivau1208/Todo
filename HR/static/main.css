@@ -24,7 +24,6 @@
     box-shadow: 0 0 4px #f4c50d;
     font-size: 20px;
     align-items: center;
-    padding-left: 30px;
 
     /* make the list items unselectable */
     -webkit-user-select: none;
@@ -37,6 +36,7 @@
 .lit{
     box-shadow: 0 0 4px #f4c50d;
     font-size: 20px;
+    align-items: center;
 }
 
 /*Text node CSS*/
@@ -44,6 +44,10 @@
     padding-top: 3px;
     text-align: center;
     text-transform: capitalize;
+}
+.ipt{
+    text-transform: capitalize;
+
 }
 .tip{
     position: relative;

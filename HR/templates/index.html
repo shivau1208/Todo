@@ -49,13 +49,13 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title text-dark" id="exampleModalLabel">Add Task</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close"></button>
                             </div>
                             <div class="modal-body text-dark">
-                                <form action="/task" method="POST">
+                                <form method="POST" id="form">
                                     <div class="form-group">
                                       <label for="recipient-name" class="col-form-label">Task Name:</label>
-                                      <input type="text" class="form-control" name="taskname" id="inputId">
+                                      <input type="text" class="form-control ipt" name="taskname" id="inputId" value="" autocomplete="off">
                                     </div>
                                     <div class="form-group">
                                       <label for="date-time" class="col-form-label">Due Date:</label>
@@ -63,7 +63,7 @@
                                     </div>
                                     <div class="form-group">
                                       <label for="message-text" class="col-form-label">Discription:</label>
-                                      <textarea class="form-control" name="discr" id="message-text"></textarea>
+                                      <textarea class="form-control ipt" name="discr" id="message_text"></textarea>
                                     </div>
                                     <input  id="btn" type="submit" style="display: none;"/>
                                 </form>
@@ -82,14 +82,14 @@
     <section class="bg-white text-dark p-3 p-lg-0">
         <div class="container bg-white container_width">
             <div>
-                <div class="list-group-item mt-3 d-flex lit list-width">
+                <div class="list-group-item mt-3 d-flex lit list-width" style="border-radius: 5px;">
                     <!-- <input type="checkbox" class="form-check-input" id="box"> -->
-                    <text class="text-dark mt-1 flex-grow-1" id="text1">Task List</text>
-                    <i class="fa-solid fa-2x fa-check p-1 m-1" id="right"></i>
-                    <i class="fa fa-solid fa-2x fa-minus p-1 m-1" id="del"></i>
+                    <h2 class="text-dark mt-1 flex-grow-1" id="text1">Task List</h2>
+                    <i class="fa-solid fa-check p-1 m-1" id="right"></i>
+                    <i class="fa fa-solid fa-minus p-1 m-1" id="del"></i>
                 </div>
             </div>
-            <div class="list-group-item mt-3 list-width" id="list">
+            <div id="list">
                 
             </div>  
         </div>

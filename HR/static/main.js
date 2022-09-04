@@ -1,20 +1,22 @@
-document.getElementById('btn').addEventListener('click',submit);
+// document.getElementById('btn').addEventListener('click',submit);
 document.getElementById('right').addEventListener('click', markRead);
 document.getElementById('del').addEventListener('click',delAll);
+document.getElementById('close').addEventListener('click',cls);
 
-fetchdata(); 
 
+// fetchdata(); 
+run()
 function submit(){
     var input = document.getElementById('inputId').value;
-    console.log(input)
     if(input === ''){
         alert('You must write somthing!');
     }
     else{
-        db()
+        
+        insert()
     }
 }
-function tasklist(data,complete){
+function tasklist(data,complete,time,discr){
     var lin = document.createElement('div');
     lin.className = 'list-group-item mt-3 d-flex align-items-center li list-width';
     var tsk = document.createTextNode(data);
@@ -37,7 +39,7 @@ function tasklist(data,complete){
 
         document.getElementById('list').prepend(lin);
     }
-    edit(lin,data);
+    edit(lin,data,time,discr);
     Delete(lin);
 }
 function linethrough(ev,name) {
@@ -61,43 +63,89 @@ function linethrough(ev,name) {
         )
     })
 }
-function edit(lin,name) {
+function edit(lin,name,time,discr) {
     var edit = document.createElement('i');
     edit.className = 'fa fa-solid fa-pen-to-square p-1 m-1 edit';
     lin.appendChild(edit);
-    edit.addEventListener('click',editable(name))
+    edit.addEventListener('click',function(e){
+        editable(name,time,discr)
+    })
 }
-function editable(name){
-    // document.getElementById('modal').click();
-    document.getElementById('inputId').textContent = name;
+function editable(name,time,discr){
+    document.getElementById('modal').click();
+    var input = document.getElementById('inputId');
+    input.value = name;
+    var x = new Date(time)
+    var y = x.toISOString().slice(0,16)
+    document.getElementById('date').value = y;
+    document.getElementById('message_text').value = discr;
     // var et = this.parentElement;
     // et.firstChild.style ='text-decoration: none';
     // et.firstChild.contentEditable = true;
     // et.firstChild.focus()
     // var oldval = et.firstChild.textContent;
     // et.firstChild.style = 'outline:none;border: 1px solid blue;'
-    // et.addEventListener('keypress',function(e){
-    //     keyEnter(e,oldval,et)
-    // })
+    update(name,y,discr)
 
 }
-function keyEnter(e,oldval,et){
-    if(e.key==='Enter'){
-        var old = oldval
-        console.log(old)
-        et.firstChild.contentEditable = false;
-        et.firstChild.style = 'outline:none;'
-        var newval = et.firstChild.textContent
-        console.log(newval)
+function cls(){
+    document.getElementById('inputId').value = '';
+    document.getElementById('date').value = '';
+    document.getElementById('message-text').value = '';
+}
+
+async function run(){
+    await insert()
+
+    db()
+
+}
+
+
+async function insert(){
+    document.getElementById('form').addEventListener('submit',function(e){
+        var frm = e.target.elements;
+        var oname = e.target.inputId.value
+        var odate = e.target.date.value
+        var odiscr = e.target.message_text.value
+        console.log(oname,odate,odiscr)
+        // fetch('/task',{
+        //     method:'POST',
+        //     headers:{
+        //         'Content-Type':'application/json'
+        //     },
+        //     body: JSON.stringify({oname,odate,odiscr})
+        // })
+        var xml = new XMLHttpRequest();
+        xml.open('POST','/task');
+        xml.setRequestHeader('Content-Type','application/json')
+        xml.send(oname,odate,odiscr)            
+        
+        
+    })
+    // setTimeout(db(),4000)
+    // db()
+}
+
+function update(name,time,discr){
+    document.getElementById('form').addEventListener('submit',function(e){
+        var frm = e.target.elements;
+        var oname = e.target.inputId.value
+        var odate = e.target.date.value
+        var odiscr = e.target.message_text.value
+        console.log(name,time,discr,oname,odate,odiscr)
         fetch('/update',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
             },
-            body: JSON.stringify({old,newval})
+            body: JSON.stringify({oname,odate,odiscr,name,time,discr})
         })
+    })
     }
-}
+    
+    
+
 function discr(lin) {
     var icon = document.createElement('i');
     icon.className = 'fa fa-solid fa-2x fa-bounce fa-angles-down p-1 m-1';
@@ -159,7 +207,7 @@ function fetchdata() {
             // }
             data.map(dt =>
                 
-                tasklist(dt.task_name,dt.task_complete)
+                tasklist(dt.task_name,dt.task_complete,dt.due_time,dt.discr)
                 )
         }
         )
