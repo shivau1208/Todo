@@ -42,7 +42,8 @@
         <div class="container container_width">
             <div  class="d-md-flex justify-content-around p-3">
                 <h3 class="text-dark mb-md-0 mr-2">Make a list of 
-                    <div class="btn btn-outline-primary" id="modal"  data-bs-toggle="modal"  data-bs-target="#exampleModal">Tasks</div>
+                    <div class="btn btn-warning" id="modal"  data-bs-toggle="modal"  data-bs-target="#exampleModal">Tasks</div>
+                    <input type="button" id="modal1"  data-bs-toggle="modal"  data-bs-target="#exampleModal" style="display: none;">
                 </h3>
                 <div class="modal fade" id="exampleModal"  tabindex="-1" data-bs-keyboard="false" data-bs-backdrop="static">
                     <div class="modal-dialog">
@@ -69,7 +70,7 @@
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" onclick="document.getElementById('btn').click();">Save</button>
+                                <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('btn').click();">Save</button>
                                 <!-- <button type="button"  class="btn btn-primary">Save changes</button> -->
                             </div>
                         </div>
