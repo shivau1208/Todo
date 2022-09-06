@@ -1,4 +1,3 @@
-document.getElementById('close').addEventListener('click',cls);
 
 // Load Task List
 fetchdata()
@@ -78,7 +77,6 @@ function tasklist(data,complete,time,discr){
     text.addEventListener('click',function(e){
         var name = data;
         linethrough(e,name)
-        
     })
     text.appendChild(tsk);
     if (complete == true){
@@ -94,6 +92,7 @@ function tasklist(data,complete,time,discr){
     edit(lin,data,time,discr);
     Delete(lin);
 }
+
 // Strike-Through to Mark as Read
 function linethrough(ev,name) {
     if(ev.target.style.cssText == 'text-decoration: line-through 2px;'){
@@ -137,11 +136,6 @@ function editable(name,time,discr){
     update(name)
 
 }
-function cls(){
-    document.getElementById('inputId').value = '';
-    document.getElementById('date').value = '';
-    document.getElementById('message_text').value = '';
-}
 function update(name){
     document.getElementById('form').addEventListener('submit',async function(e){
         e.preventDefault();
@@ -161,7 +155,15 @@ function update(name){
     })
 }
 
-// Delete Task
+// Modal Close Button Event
+document.getElementById('close').addEventListener('click',cls);
+function cls(){
+    document.getElementById('inputId').value = '';
+    document.getElementById('date').value = '';
+    document.getElementById('message_text').value = '';
+}
+
+// Delete Single Task
 function Delete(lin) {
     var Delete = document.createElement('i');
     Delete.className = 'fa fa-solid fa-minus p-1 m-1';
@@ -171,14 +173,10 @@ function Delete(lin) {
 function delSingle(){
     var div = this.parentElement;
     div.remove();
-    const d= JSON.stringify(div.firstChild.textContent);
-    delS(d);
-}
-function delS(d){
     var xml = new XMLHttpRequest()
     xml.open('POST','/del',true);
     xml.setRequestHeader('Content-Type','application/json')
-    xml.send(d)
+    xml.send(JSON.stringify(div.firstChild.textContent))
 }
 
 // Mark as Read all Tasks
