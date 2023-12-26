@@ -5,7 +5,7 @@
 #### To clone the application use below link:
 # <img src='https://github.com/shivau1208/S-ToDo/assets/102743170/eaf9cd13-edf7-498b-9018-57bc6e0b7407' width='28' /> [S-ToDo](https://github.com/shivau1208/S-ToDo.git)
 ## Previews                                                                                                                                    
-<img src='https://github.com/shivau1208/S-ToDo/assets/102743170/ce078b10-8294-475e-8f71-97bbeffdf80d' width='500' height='306' /> <img src='https://github.com/shivau1208/S-ToDo/assets/102743170/563d8670-d5c4-4642-99ab-880901866656' width='500' />
+<img src='https://github.com/shivau1208/S-ToDo/assets/102743170/ce078b10-8294-475e-8f71-97bbeffdf80d' width='500' /> <img src='https://github.com/shivau1208/S-ToDo/assets/102743170/563d8670-d5c4-4642-99ab-880901866656' width='500' />
 
 
 ## Developement Setup
