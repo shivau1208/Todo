@@ -17,11 +17,11 @@
 ```
 
 ## Build Docker Image with Dockerfile
-```docker build -t Todo <CWD>```
+```docker build -t todo <CWD>```
 
 ## Run the Container with Docker
 ```
-docker run -p 5000:5000 --name TodoContainer --image Todo
+docker run -p 5000:5000 --name TodoContainer todo
 ```
 
 ## Setup SQL DB with ToDo_App.sql
