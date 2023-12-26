@@ -1,5 +1,10 @@
 # S-ToDo
 
+#### S-ToDO application to add daily tasks.
+#### Application will work as Single page application using AJAX and JSON.
+#### To clone the application use below link:
+[S-ToDo](https://github.com/shivau1208/S-ToDo.git)
+
 ## Developement Setup
 ```
 1. Install Python > 3.11
