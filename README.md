@@ -4,7 +4,7 @@
 ```
 1. Install Python > 3.11
 2. Create enviornment with python.
-3. pip install requirement.txt
+3. pip install -r requirement.txt
 ```
 
 ## Build Docker Image with Dockerfile
