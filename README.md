@@ -12,7 +12,7 @@
 
 ## Run the Container with Docker
 ```
-docker run -p 5000:5000 --name TodoContainer --image <image name>
+docker run -p 5000:5000 --name TodoContainer --image Todo
 ```
 
 ## Setup SQL DB with ToDo_App.sql
