@@ -25,3 +25,53 @@ docker run -p 5000:5000 --name TodoContainer todo
 
 ## Setup SQL DB with ToDo_App.sql
 ***Note:*** Use PostgreSQL.
+
+## Mongo DB Connection
+```
+from pymongo import MongoClient
+
+# Connect to MongoDB
+client = MongoClient('mongodb://localhost:27017/')
+
+# Access the database
+db = client['mydatabase']
+
+# Access the collection
+collection = db['mycollection']
+
+# Insert a document
+collection.insert_one({"name": "Alice", "age": 30})
+
+# Find one document
+document = collection.find_one({"name": "Alice"})
+print("Find one:", document)
+
+# Find multiple documents
+documents = collection.find({"age": {"$gt": 25}})
+print("Find multiple:")
+for doc in documents:
+    print(doc)
+
+# Update a document
+collection.update_one({"name": "Alice"}, {"$set": {"age": 31}})
+
+# Update multiple fields in the document
+collection.update_one(
+    {"name": "Alice"},  # Query to match the document
+    {
+        "$set": {
+            "age": 31,
+            "city": "New York",
+            "email": "alice@example.com"
+        }
+    }
+)
+
+# Verify the update
+updated_document = collection.find_one({"name": "Alice"})
+print(updated_document)
+
+# Delete a document
+collection.delete_one({"name": "Alice"})
+
+```

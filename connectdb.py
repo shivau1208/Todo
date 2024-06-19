@@ -1,13 +1,7 @@
-from HR import app
-from flask_mysqldb import MySQL
+from Todo import app
+from pymongo import MongoClient
 
+client = MongoClient('mongodb+srv://todo:6a6ydo!!1to0@cluster0.qbjau9n.mongodb.net')
+db = client['Todo']
+listcollection = db.todolist
 
-
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '1234'
-app.config['MYSQL_DB'] = 'ToDo'
-app.config['MYSQL_PORT'] = 3306
-app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
-
-mydb = MySQL(app)
