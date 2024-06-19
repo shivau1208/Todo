@@ -1,0 +1,86 @@
+@media(min-width: 768px){
+    .news-input{
+        width: 50%;
+    }
+}
+/* @media(min-width: 768px){
+    .list-width{
+        width: 100%;
+    }
+} */
+@media(min-width: 1400px){
+    .container_width{
+        width: 45%;
+    }
+}
+
+.list-group{
+    align-items: center;
+}
+
+
+/*li node CSS*/
+.li{
+    box-shadow: 0 0 4px #f4c50d;
+    font-size: 20px;
+    align-items: center;
+
+    /* make the list items unselectable */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Task header li node CSS*/
+.lit{
+    box-shadow: 0 0 4px #f4c50d;
+    font-size: 20px;
+    align-items: center;
+}
+
+/*Text node CSS*/
+.text{
+    padding-top: 3px;
+    text-align: center;
+    text-transform: capitalize;
+    font-size: 25px;
+}
+.ipt{
+    text-transform: capitalize;
+
+}
+.tip{
+    position: relative;
+}
+
+.tip:hover:after{
+    position: absolute;
+    display: inline-block;
+    left: 0px;
+    top: 0px;
+    color: white;
+    background-color: black;
+    font-size: 5px;
+}
+
+.checked{
+    text-decoration: line-through;
+    text-decoration-style: solid;
+    /* text-decoration-color: red; */
+    text-decoration-thickness: 2px;
+}
+
+/*Task header CSS*/
+#text1{
+    color: #26d96c !important;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    margin-top: 0px !important;
+}
+#right,#del{
+    font-size: 30px;
+    cursor: pointer;
+}
