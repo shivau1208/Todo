@@ -3,21 +3,10 @@
         width: 50%;
     }
 }
-/* @media(min-width: 768px){
-    .list-width{
-        width: 100%;
-    }
-} */
-@media(min-width: 1400px){
-    .container_width{
-        width: 45%;
-    }
-}
 
 .list-group{
     align-items: center;
 }
-
 
 /*li node CSS*/
 .li{

@@ -73,7 +73,6 @@ def delete():
 @app.route('/deleteall',methods=['POST'])
 def deleteAll():
     try:
-        # taskIds = request.get_json()
         listcollection.delete_many({'task_complete':"1"})
         return jsonify({'status':200,'message':'All task deleted successfully'}) 
     except Exception as e:

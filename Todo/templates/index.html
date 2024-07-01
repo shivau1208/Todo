@@ -10,15 +10,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="../static/main.css">
     <link rel="shortcut icon" href="../static/favicon.ico">
-    <title>S-HR</title>
+    <title>Todo App</title>
 </head>
 <body class="p-2 m-0 border-0 bd-example">
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-        <div class="container container_width">
-            <a href="#" class="navbar-brand">
+        <div class="container container_width justify-content-start">
+            <a href="#" class="navbar me-2">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4XerngAYda3ZhW2WCxkf2vMpotKotpmMSZQ&usqp=CAU" alt="" width="45" height="45" class="rounded-circle">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+            <div class="continer-fluid text-light">
+                <h5 class="m-0">ToDo</h5>
+                <small class="fs-8 fw-light">Your personal app for tasks</small>
+            </div>
+            <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navmenu">
@@ -33,7 +37,7 @@
                         <a href="#" class="nav-link active">Contact Us</a>
                     </li>
                 </ul>
-            </div>
+            </div> -->
         </div>
     </nav>
     
@@ -42,8 +46,10 @@
         <div class="container container_width">
             <div  class="d-md-flex justify-content-around p-3">
                 <h3 class="text-dark mb-md-0 mr-2">Make a list of 
-                    <div class="btn btn-warning" id="modal"  data-bs-toggle="modal"  data-bs-target="#exampleModal">Tasks</div>
-                    <input type="button" id="modal1"  data-bs-toggle="modal"  data-bs-target="#exampleModal" style="display: none;">
+                    <!-- <div class="btn btn-warning" id="modal"  data-bs-toggle="modal"  data-bs-target="#exampleModal">Tasks</div> -->
+                    <button type="button" id="modal1" class="btn btn-outline-warning text-dark"  data-bs-toggle="modal"  data-bs-target="#exampleModal" >
+                        Tasks<sup><i class="fa-solid fa-plus"></i></sup>
+                    </button>
                 </h3>
                 <div class="modal fade" id="exampleModal"  tabindex="-1" data-bs-keyboard="false" data-bs-backdrop="static">
                     <div class="modal-dialog">
@@ -82,13 +88,10 @@
 
     <section class="bg-white text-dark p-3 p-lg-0">
         <div class="container bg-white container_width">
-            <div>
-                <div class="list-group-item mt-3 d-flex lit list-width" style="border-radius: 5px;">
-                    <!-- <input type="checkbox" class="form-check-input" id="box"> -->
-                    <h2 class="text-dark mt-1 flex-grow-1" id="text1">Task List</h2>
-                    <i class="fa-solid fa-check p-1 m-1" id="right"></i>
-                    <i class="fa fa-solid fa-minus p-1 m-1" id="del"></i>
-                </div>
+            <div class="list-group-item mt-3 d-flex lit list-width" style="border-radius: 5px;">
+                <h2 class="text-dark mt-1 flex-grow-1" id="text1">Task List</h2>
+                <i class="fa-solid fa-check p-1 m-1" id="right"></i>
+                <i class="fa fa-solid fa-minus p-1 m-1" id="del"></i>
             </div>
             <div id="list"></div>  
         </div>

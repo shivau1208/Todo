@@ -4,16 +4,6 @@ async function fetchdata() {
   fetch('/list')
     .then((res) => res.json())
     .then((data) => {
-      // for (let i=0; i<data.length;i++){
-      //     const dt = data.sort((a,b) => {
-      //         if (b.time>a.time){
-      //             return 1;
-      //         }else{
-      //             return -1;
-      //         }
-      //     });
-      //     tasklist(dt[i].task_name,dt[i].task_complete)
-      // }
       if(Array.isArray(data)){
         data.map((dt) => tasklist(dt._id,dt.task_name, dt.task_complete, dt.due_time, dt.discr));
       }else{
@@ -22,23 +12,23 @@ async function fetchdata() {
     })
     .catch((error) => console.error(error));
 }
-function db() {
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', '/list');
-  xhr.onload = function () {
-    let dat = JSON.parse(this.response);
-    for (let i = 0; i < dat.length; i++) {
-      let dt = dat[i].task_name;
-      let complete = dat[i].task_complete;
-      tasklist(dt, complete);
-    }
-  };
-  xhr.send();
-}
+// function db() {
+//   const xhr = new XMLHttpRequest();
+//   xhr.open('GET', '/list');
+//   xhr.onload = function () {
+//     let dat = JSON.parse(this.response);
+//     for (let i = 0; i < dat.length; i++) {
+//       let dt = dat[i].task_name;
+//       let complete = dat[i].task_complete;
+//       tasklist(dt, complete);
+//     }
+//   };
+//   xhr.send();
+// }
 
 // Adding New Task
-document.getElementById('modal').addEventListener('click', insert);
-function insert() {
+document.getElementById('modal1').addEventListener('click', AddTask);
+function AddTask() {
   document.getElementById('form').addEventListener('submit', async function (e) {
     e.preventDefault();
     let oname = e.target.inputId.value;
@@ -46,24 +36,21 @@ function insert() {
     let odiscr = e.target.message_text.value;
     let complete = 0
     if (oname != '' && odate != '') {
-      await fetch('/task', {
+      fetch('/task', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ oname, odate, odiscr, complete}),
-      });
-      document.getElementById('close').click();
-      window.location.reload();
+      }).then(()=>{
+        document.getElementById('close').click();
+        window.location.reload();
+        db();
+      })
     } else {
       alert('You must write something!');
     }
-    // var xml = new XMLHttpRequest();
-    // xml.open('POST','/task');
-    // xml.setRequestHeader('Content-Type','application/json')
-    // xml.send(JSON.stringify({oname,odate,odiscr}))
   });
-  db();
 }
 
 // Displaing New Task
@@ -78,7 +65,7 @@ function tasklist(id,data, complete, time, discr) {
   text.style.textDecoration = 'none';
   text.addEventListener('click', function (e) {
     let name = data;
-    linethrough(e, name);
+    StrikeThrough(e, name);
   });
   text.appendChild(tsk);
   if (complete == 1) {
@@ -95,9 +82,8 @@ function tasklist(id,data, complete, time, discr) {
 }
 
 // Strike-Through to Mark as Read
-function linethrough(ev, name) {
+function StrikeThrough(ev, name) {
   let task_complete = null
-  console.log(ev.target.style.textDecoration)
   if (ev.target.style.textDecoration !== 'none') {
     ev.target.style.textDecoration = 'none';
     task_complete = 0;
@@ -149,7 +135,6 @@ function update(name) {
     let nname = e.target.inputId.value;
     let ndate = e.target.date.value;
     let ndiscr = e.target.message_text.value;
-    console.log(name, nname, ndate, ndiscr);
     await fetch('/update', {
       method: 'POST',
       headers: {
@@ -208,15 +193,17 @@ function markRead() {
 // Delete All Tasks
 document.getElementById('del').addEventListener('click', delAll);
 function delAll() {
-  let propt = prompt('Are you sure?');
-  if (propt == 'yes') {
+  let propt = confirm('Are you sure to delete completed tasks?');
+  if (propt) {
     fetch('/deleteall', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
     })
-    .then(()=>fetchdata())
+    .then(()=>{
+      window.location.reload()
+    })
     
   }
 }
