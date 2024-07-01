@@ -13,6 +13,7 @@
 1. Install Python > 3.11
 2. Create enviornment with python.
 3. pip install -r requirement.txt
+4. python run.py
 ```
 
 ## Build Docker Image with Dockerfile
@@ -22,9 +23,6 @@
 ```
 docker run -p 5000:5000 --name TodoContainer todo
 ```
-
-## Setup SQL DB with ToDo_App.sql
-***Note:*** Use PostgreSQL.
 
 ## Mongo DB Connection
 ```
